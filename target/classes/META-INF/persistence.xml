@@ -12,6 +12,7 @@
 		<class>pe.edu.upc.techlive.models.entities.Producto</class>
 		<class>pe.edu.upc.techlive.models.entities.Usuario</class>
 		<class>pe.edu.upc.techlive.models.entities.Vendedor</class>
+		<class>pe.edu.upc.techlive.models.entities.Cliente</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property
