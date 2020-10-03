@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Delivery - Cliente</title>
+</h:head>
+<h:body>
+    <h2>Nuevo Cliente</h2>
+    
+	<h:form id="form-cliente">
+		<p:panelGrid id="panel-cliente" columns="4">
+		
+			<p:outputLabel for="input-dni" value="DNI: "/>
+			<p:inputText id="input-dni" value="#{clienteView.cliente.dni}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{clienteView.cleanForm()}" 
+			update=":form-cliente:input-dni" />
+		<p:commandButton value="Grabar" actionListener="#{clienteView.saveCliente()}" 
+			update=":form-cliente:input-dni" />	
+			
+		<p:panelGrid id="panel-cliente" columns="4">	
+			<p:outputLabel for="input-ruc" value="RUC: "/>
+			<p:inputText id="input-ruc" value="#{clienteView.cliente.ruc}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{clienteView.cleanForm()}" 
+			update=":form-cliente:input-ruc" />
+		<p:commandButton value="Grabar" actionListener="#{clienteView.saveCliente()}" 
+			update=":form-cliente:input-ruc" />	
+			
+		<p:panelGrid id="panel-cliente" columns="4">	
+			<p:outputLabel for="input-direccion" value="Direccion: "/>
+			<p:inputText id="input-direccion" value="#{clienteView.cliente.direccion}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{clienteView.cleanForm()}" 
+			update=":form-cliente:input-direccion" />
+		<p:commandButton value="Grabar" actionListener="#{clienteView.saveCliente()}" 
+			update=":form-cliente:input-direccion" />	
+	</h:form>
+
+</h:body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TechLive - Vendedor</title>
+</h:head>
+<h:body>
+    <h2>Nuevo Vendedor</h2>
+    
+	<h:form id="form-vendedor">
+		<p:panelGrid id="panel-vendedor" columns="4">
+			<p:outputLabel for="input-nombre" value="Nombre: "/>
+			<p:inputText id="input-nombre" value="#{vendedorView.vendedor.nombre}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{vendedorView.cleanForm()}" 
+			update=":form-vendedor:input-nombre" />
+		<p:commandButton value="Grabar" actionListener="#{vendedorView.saveVendedor()}" 
+			update=":form-vendedor:input-nombre" />	
+			
+			<p:panelGrid id="panel-vendedor" columns="4">
+			<p:outputLabel for="input-ruc" value="RUC: "/>
+			<p:inputText id="input-ruc" value="#{vendedorView.vendedor.ruc}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{vendedorView.cleanForm()}" 
+			update=":form-vendedor:input-ruc" />
+		<p:commandButton value="Grabar" actionListener="#{vendedorView.saveVendedor()}" 
+			update=":form-vendedor:input-ruc" />	
+			
+			<p:panelGrid id="panel-vendedor" columns="4">
+			<p:outputLabel for="input-direccion" value="Direccion: "/>
+			<p:inputText id="input-direccion" value="#(vendedorView.vendedor.direccion)"/>
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{vendedorView.cleanForm()}" 
+			update=":form-vendedor:input-direccion" />
+		<p:commandButton value="Grabar" actionListener="#{vendedorView.saveVendedor()}" 
+			update=":form-vendedor:input-direccion" />	
+			
+			
+	</h:form>
+
+</h:body>
+</html>

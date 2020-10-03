@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="pedidos")
@@ -32,9 +33,15 @@ public class Pedido {
 	@JoinColumn(name="detalle_pedido_id")
 	private DetallePedido detallePedido;
 	
+	@Transient
+	private Integer detallePedidoId;
+	
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+	
+	@Transient
+	private Integer clienteId;
 
 	public Integer getId() {
 		return id;
@@ -66,6 +73,30 @@ public class Pedido {
 
 	public void setDetallePedido(DetallePedido detallePedido) {
 		this.detallePedido = detallePedido;
+	}
+
+	public Integer getDetallePedidoId() {
+		return detallePedidoId;
+	}
+
+	public void setDetallePedidoId(Integer detallePedidoId) {
+		this.detallePedidoId = detallePedidoId;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Integer getClienteId() {
+		return clienteId;
+	}
+
+	public void setClienteId(Integer clienteId) {
+		this.clienteId = clienteId;
 	}
 
 	

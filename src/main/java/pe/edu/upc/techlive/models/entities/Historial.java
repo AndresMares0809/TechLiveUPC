@@ -1,5 +1,6 @@
 package pe.edu.upc.techlive.models.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,11 +31,13 @@ public class Historial {
 	@Temporal(TemporalType.DATE)
 	private Date ultimaActualizacion;
 	
-	private DetallePedido detallePedido;
-	
 	@OneToMany(mappedBy = "historial")
 	private List<DetallePedido> detallePedidos;
 
+	public Historial() {
+		detallePedidos = new ArrayList<>();
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -59,13 +62,6 @@ public class Historial {
 		this.ultimaActualizacion = ultimaActualizacion;
 	}
 
-	public DetallePedido getDetallePedido() {
-		return detallePedido;
-	}
-
-	public void setDetallePedido(DetallePedido detallePedido) {
-		this.detallePedido = detallePedido;
-	}
 
 	public List<DetallePedido> getDetallePedidos() {
 		return detallePedidos;

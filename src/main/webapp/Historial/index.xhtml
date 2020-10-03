@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TECHLIVE - Historial</title>
+</h:head>
+<h:body>
+    <h2>Lista Historial</h2>
+    
+    <h:form id="form-historial">
+    	<p:growl id="growl" life="2000" />
+    
+		<p:panelGrid id="panel-historial" columns="4" style="display:#{historialView.stylePanelGrid}">
+			<p:outputLabel for="input-estado" value="Estado: "/>
+			<p:inputText id="input-estado" value="#{historialView.historial.estado}"/>
+			
+			<p:outputLabel for="date-ultimaActualizacion" value="Ultima Actualizacion:  "/>
+			<p:inputText id="date-ultimaActualizacion" value="#{historialView.historial.ultimaActualizacion}"/>
+						
+					
+		</p:panelGrid>	
+		
+	    <p:dataTable id="dt-historial" value="#{historialView.historiales}" var="historial" 
+	    		paginator="true" rows="5" paginatorPosition="bottom" 
+	    		selectionMode="single" rowKey="#{historial.id}" emptyMessage="No se encontraron registros"
+	    		style="display:#{historialView.styleDataTable}">
+	    		
+	    	<p:ajax event="rowSelect" listener="#{historialView.selectHistorial}" 
+	    		update=":form-historial:toolbar-historial :form-historial:panel-historial" />
+	    	<p:ajax event="rowUnselect" listener="#{historialView.unselectHistorial}" 
+	    		update=":form-historial:toolbar-historial :form-historial:panel-historial" />
+	    		
+		    <p:column headerText="Id">
+		        <h:outputText value="#{historial.id}" />
+		    </p:column>	 
+		    <p:column headerText="Estado">
+		        <h:outputText value="#{historial.estado}" />
+		    </p:column>
+		    <p:column headerText="Ultima Actualizacion">
+		        <h:outputText value="#{historial.ultimaActualizacion}" />
+		    </p:column>
+		    
+		</p:dataTable>
+		
+		<p:toolbar id="toolbar-historial">
+			<f:facet name="left">
+				<p:commandButton value="Nuevo" actionListener="#{historialView.newHistorial()}" 
+					update=":form-historial :form-historial:dt-historial :form-historial:toolbar-historial" 
+					icon="pi pi-file" disabled="#{historialView.disabledNuevo}" />
+					
+				<p:commandButton id="button-grabar" value="Grabar" actionListener="#{historialView.savehistorial()}" 
+					update=":form-historial :form-historial:dt-historial :form-historial:toolbar-historial" 
+					icon="pi pi-save"
+					disabled="#{historialView.disabledGrabar}" />	
+					
+				<p:commandButton id="button-cancelar" value="Cancelar" actionListener="#{historialView.cancelSaveHistorial()}" 
+					update=":form-historial :form-historial:dt-historial :form-historial:toolbar-historial" 
+					icon="pi pi-times"
+					disabled="#{historialView.disabledCancelar}" />	
+					
+				<p:commandButton value="Editar" actionListener="#{historialView.editHistorial()}" 
+					update=":form-historial :form-historial:dt-historial :form-historial:toolbar-historial" 
+					disabled="#{historialView.disabledEditar}" />
+					
+				<p:commandButton id="button-eliminar" value="Eliminar" 
+					actionListener="#{historialView.deleteHistorial()}" 
+					update=":form-historial :form-historial:dt-historial :form-historial:toolbar-historial" 
+					disabled="#{historialView.disabledEliminar}" >
+					<p:confirm header="Confirmacion" 
+						message="Estas seguro que deseas eliminar: #{historialView.historialSelected.estado}" 
+						icon="pi pi-exclamation-triangle" />
+			    </p:commandButton>
+			     
+			    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			    </p:confirmDialog>
+				
+	
+			</f:facet>
+		</p:toolbar>
+	
+	</h:form>
+
+</h:body>
+</html>

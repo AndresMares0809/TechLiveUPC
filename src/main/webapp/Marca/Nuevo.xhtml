@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Delivery - Marca</title>
+</h:head>
+<h:body>
+    <h2>Nueva Marca</h2>
+    
+	<h:form id="form-marca">
+		<p:panelGrid id="panel-marca" columns="4">
+			<p:outputLabel for="input-nombre" value="Denominación: "/>
+			<p:inputText id="input-nombre" value="#{marcaView.marca.nombre}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{marcaView.cleanForm()}" 
+			update=":form-marca:input-nombre" />
+		<p:commandButton value="Grabar" actionListener="#{marcaView.saveCategoria()}" 
+			update=":form-marca:input-nombre" />	
+	</h:form>
+
+</h:body>
+</html>

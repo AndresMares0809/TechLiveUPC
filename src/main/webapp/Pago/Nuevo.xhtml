@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TechLive - Pago</title>
+</h:head>
+<h:body>
+    <h2>Nueva Pago</h2>
+    
+	<h:form id="form-pago">
+		<p:panelGrid id="panel-pago" columns="4">
+			<p:outputLabel for="input-codigo" value="Denominación: "/>
+			<p:inputText id="input-codigo" value="#{pagoView.pago.codigo}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{pagoView.cleanForm()}" 
+			update=":form-pago:input-codigo" />
+		<p:commandButton value="Grabar" actionListener="#{pagoView.savePago()}" 
+			update=":form-pago:input-codigo" />	
+			
+		<p:panelGrid id="panel-pago" columns="4">	
+		<p:outputLabel for="input-cvv" value="CVV: "/>
+		<p:inputText id="input-cvv" value="#{pagoView.pago.cvv}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{pagoView.cleanForm()}" 
+			update=":form-pago:input-cvv" />
+		<p:commandButton value="Grabar" actionListener="#{pagoView.savePago()}" 
+			update=":form-pago:input-cvv" />	
+			
+			<p:panelGrid id="panel-pago" columns="4">	
+		<p:outputLabel for="input-fecha_vencimiento" value="Fecha Vencimiento: "/>
+		<p:inputText id="input-fecha_vencimiento" value="#{pagoView.pago.fecha_vencimiento}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{pagoView.cleanForm()}" 
+			update=":form-pago:input-fecha_vencimiento" />
+		<p:commandButton value="Grabar" actionListener="#{pagoView.savePago()}" 
+			update=":form-pago:input-fecha_vencimiento" />	
+			
+			<p:panelGrid id="panel-pago" columns="4">	
+		<p:outputLabel for="input-nombreTarjeta" value="Nombre Tarjeta: "/>
+		<p:inputText id="input-nombreTarjeta" value="#{pagoView.pago.nombreTarjeta}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{pagoView.cleanForm()}" 
+			update=":form-pago:input-nombreTarjeta" />
+		<p:commandButton value="Grabar" actionListener="#{pagoView.savePago()}" 
+			update=":form-pago:input-nombreTarjeta" />
+			
+			
+	</h:form>
+
+</h:body>
+</html>

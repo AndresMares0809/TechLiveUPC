@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TECHLIVE - Categorias</title>
+</h:head>
+<h:body>
+    <h2>Lista Clientes</h2>
+    
+    <h:form id="form-cliente">
+    	<p:growl id="growl" life="2000" />
+    
+		<p:panelGrid id="panel-cliente" columns="4" style="display:#{clienteView.stylePanelGrid}">
+			<p:outputLabel for="input-dni" value="Dni: "/>
+			<p:inputText id="input-dni" value="#{clienteView.cliente.dni}"/>	
+			
+			<p:outputLabel for="input-ruc" value="Ruc:  "/>
+			<p:inputText id="input-ruc" value="#{clienteView.cliente.ruc}"/>
+			
+			<p:outputLabel for="input-direccion" value="Dirección:  "/>
+			<p:inputText id="input-direccion" value="#{clienteView.cliente.direccion}"/>
+			
+			
+				
+		</p:panelGrid>	
+		
+		<p:panelGrid id="panel-buscar" columns="4" style="display:#{clienteView.styleDataTable}">
+			<p:outputLabel for="input-dni-search" value="Dni: "/>
+			<p:inputText id="input-dni-search" value="#{clienteView.clienteSearch.dni}"/>	
+			<p:commandButton value="Buscar" actionListener="#{clienteView.searchDNICliente()}" 
+					update=":form-cliente :form-cliente:dt-cliente :form-cliente:toolbar-cliente" 
+					icon="pi pi-search" />
+		</p:panelGrid>	
+		
+	     <p:dataTable id="dt-cliente" value="#{clienteView.clientes}" var="cliente" 
+	    		paginator="true" rows="5" paginatorPosition="bottom" 
+	    		selectionMode="single" rowKey="#{cliente.id}" emptyMessage="No se encontraron registros"
+	    		style="display:#{clienteView.styleDataTable}">
+	    		
+	    	<p:ajax event="rowSelect" listener="#{clienteView.selectCliente}" 
+	    		update=":form-cliente:toolbar-cliente :form-cliente:panel-cliente" />
+	    	<p:ajax event="rowUnselect" listener="#{clienteView.unselectCliente}" 
+	    		update=":form-cliente:toolbar-cliente :form-cliente:panel-cliente" />
+	    		
+		    <p:column headerText="Id">
+		        <h:outputText value="#{cliente.id}" />
+		    </p:column>	 
+		    <p:column headerText="DNI">
+		        <h:outputText value="#{cliente.dni}" />
+		    </p:column>
+		    <p:column headerText="RUC">
+		        <h:outputText value="#{cliente.ruc}" />
+		    </p:column>
+		    <p:column headerText="Dirección">
+		        <h:outputText value="#{cliente.direccion}" />
+		    </p:column>
+		</p:dataTable>
+		
+		<p:toolbar id="toolbar-cliente">
+			<f:facet name="left">
+				<p:commandButton value="Nuevo" actionListener="#{clienteView.newCliente()}" 
+					update=":form-cliente :form-cliente:dt-cliente :form-cliente:toolbar-cliente" 
+					icon="pi pi-file" disabled="#{clienteView.disabledNuevo}" />
+					
+				<p:commandButton id="button-grabar" value="Grabar" actionListener="#{clienteView.saveCliente()}" 
+					update=":form-cliente :form-cliente:dt-cliente :form-cliente:toolbar-cliente" 
+					icon="pi pi-save"
+					disabled="#{clienteView.disabledGrabar}" />	
+					
+				<p:commandButton id="button-cancelar" value="Cancelar" actionListener="#{clienteView.cancelSaveCliente()}" 
+					update=":form-cliente :form-cliente:dt-cliente :form-cliente:toolbar-cliente" 
+					icon="pi pi-times"
+					disabled="#{clienteView.disabledCancelar}" />	
+					
+				<p:commandButton value="Editar" actionListener="#{clienteView.editCliente()}" 
+					update=":form-cliente :form-cliente:dt-cliente :form-cliente:toolbar-cliente" 
+					disabled="#{clienteView.disabledEditar}" />
+					
+				<p:commandButton id="button-eliminar" value="Eliminar" 
+					actionListener="#{clienteView.deleteCliente()}" 
+					update=":form-cliente :form-cliente:dt-cliente :form-cliente:toolbar-cliente" 
+					disabled="#{clienteView.disabledEliminar}" >
+					<p:confirm header="Confirmacion" 
+						message="Estas seguro que deseas eliminar: #{clienteView.clienteSelected.dni}" 
+						icon="pi pi-exclamation-triangle" />
+			    </p:commandButton>
+			     
+			    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			    </p:confirmDialog>
+				
+	
+			</f:facet>
+		</p:toolbar>
+	
+	</h:form>
+
+</h:body>
+</html>

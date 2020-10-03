@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="pagos")
@@ -34,13 +35,14 @@ public class Pago {
 	@Column(name = "nombre_tarjeta", length = 30, nullable = false)
 	private String nombreTarjeta;
 	
-	@Column(name = "apellido_tarjeta", length = 30, nullable = false)
-	private String apellidoTarjeta;
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
+	@Transient
+	private Integer usuarioId;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -81,13 +83,6 @@ public class Pago {
 		this.nombreTarjeta = nombreTarjeta;
 	}
 
-	public String getApellidoTarjeta() {
-		return apellidoTarjeta;
-	}
-
-	public void setApellidoTarjeta(String apellidoTarjeta) {
-		this.apellidoTarjeta = apellidoTarjeta;
-	}
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -96,4 +91,14 @@ public class Pago {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	public Integer getUsuarioId() {
+		return usuarioId;
+	}
+
+	public void setUsuarioId(Integer usuarioId) {
+		this.usuarioId = usuarioId;
+	}
+	
+	
 }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TECHLIVE - Pago</title>
+</h:head>
+<h:body>
+    <h2>Lista Pago</h2>
+    
+    <h:form id="form-pago">
+    	<p:growl id="growl" life="2000" />
+    
+		<p:panelGrid id="panel-pago" columns="4" style="display:#{pagoView.stylePanelGrid}">
+		
+			<p:outputLabel for="input-codigo" value="Codigo: "/>
+			<p:inputText id="input-codigo" value="#{pagoView.pago.codigo}"/>
+			
+			<p:outputLabel for="input-cvv" value="CVV:  "/>
+			<p:inputText id="input-cvv" value="#{pagoView.pago.cvv}"/>
+			
+			<p:outputLabel for="date-fecha_vencimiento" value="Fecha de vencimiento:  "/>
+			<p:datePicker id="date-fecha_vencimiento" value="#{pagoView.pago.fecha_vencimiento}" />			
+			
+			<p:outputLabel for="input-nombreTarjeta" value="Nombre tarjeta: "/>
+			<p:inputText id="input-nombreTarjeta" value="#{pagoView.pago.nombreTarjeta}"/>
+					
+		</p:panelGrid>	
+		
+		<p:panelGrid id="panel-buscar" columns="4" style="display:#{pagoView.styleDataTable}">
+			<p:outputLabel for="input-nombreTarjeta-search" value="Nombre Tarjeta: "/>
+			<p:inputText id="input-nombreTarjeta-search" value="#{pagoView.pagoSearch.nombreTarjeta}"/>	
+			<p:commandButton value="Buscar" actionListener="#{pagoView.searchNombreTarjeta()}" 
+					update=":form-pago:dt-pago :form-pago:toolbar-pago" 
+					icon="pi pi-search" />
+		</p:panelGrid>	
+		
+	    <p:dataTable id="dt-pago" value="#{pagoView.pagos}" var="pago" 
+	    		paginator="true" rows="5" paginatorPosition="bottom" 
+	    		selectionMode="single" rowKey="#{pago.id}" emptyMessage="No se encontraron registros"
+	    		style="display:#{pagoView.styleDataTable}">
+	    		
+	    	<p:ajax event="rowSelect" listener="#{pagoView.selectPago}" 
+	    		update=":form-pago:toolbar-pago :form-pago:panel-pago" />
+	    	<p:ajax event="rowUnselect" listener="#{pagoView.unselectPago}" 
+	    		update=":form-pago:toolbar-pago :form-pago:panel-pago" />
+	    		
+		    <p:column headerText="Id">
+		        <h:outputText value="#{pago.id}" />
+		    </p:column>	 
+		    <p:column headerText="Codigo">
+		        <h:outputText value="#{pago.codigo}" />
+		    </p:column>
+		    <p:column headerText="CVV">
+		        <h:outputText value="#{pago.cvv}" />
+		    </p:column>
+		    <p:column headerText="Fecha Vencimiento">
+		        <h:outputText value="#{pago.fecha_vencimiento}" />
+		    </p:column>
+		    <p:column headerText="Nombre Tarjeta">
+		        <h:outputText value="#{pago.nombreTarjeta}" />
+		    </p:column>
+		    
+		</p:dataTable>
+		
+		<p:toolbar id="toolbar-pago">
+			<f:facet name="left">
+				<p:commandButton value="Nuevo" actionListener="#{pagoView.newPago()}" 
+					update=":form-pago :form-pago:dt-pago :form-pago:toolbar-pago" 
+					icon="pi pi-file" disabled="#{pagoView.disabledNuevo}" />
+					
+				<p:commandButton id="button-grabar" value="Grabar" actionListener="#{pagoView.savePago()}" 
+					update=":form-pago :form-pago:dt-pago :form-pago:toolbar-pago" 
+					icon="pi pi-save"
+					disabled="#{pagoView.disabledGrabar}" />	
+					
+				<p:commandButton id="button-cancelar" value="Cancelar" actionListener="#{pagoView.cancelSavePago()}" 
+					update=":form-pago :form-pago:dt-pago :form-pago:toolbar-pago" 
+					icon="pi pi-times"
+					disabled="#{pagoView.disabledCancelar}" />	
+					
+				<p:commandButton value="Editar" actionListener="#{pagoView.editPago()}" 
+					update=":form-pago :form-pago:dt-pago :form-pago:toolbar-pago" 
+					disabled="#{pagoView.disabledEditar}" />
+					
+				<p:commandButton id="button-eliminar" value="Eliminar" 
+					actionListener="#{pagoView.deletePago()}" 
+					update=":form-pago :form-pago:dt-pago :form-pago:toolbar-pago" 
+					disabled="#{pagoView.disabledEliminar}" >
+					<p:confirm header="Confirmacion" 
+						message="Estas seguro que deseas eliminar: #{pagoView.pagoSelected.codigo}" 
+						icon="pi pi-exclamation-triangle" />
+			    </p:commandButton>
+			     
+			    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			    </p:confirmDialog>
+				
+	
+			</f:facet>
+		</p:toolbar>
+	
+	</h:form>
+
+</h:body>
+</html>

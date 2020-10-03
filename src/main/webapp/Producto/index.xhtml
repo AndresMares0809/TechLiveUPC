@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Delivery - Producto</title>
+</h:head>
+<h:body>
+    <h2>Lista Producto</h2>
+    
+    <h:form id="form-producto">
+    	<p:growl id="growl" life="2000" />
+    
+		<p:panelGrid id="panel-producto" columns="4" style="display:#{productoView.stylePanelGrid}">
+			<p:outputLabel for="input-modelo" value="Modelo: "/>
+			<p:inputText id="input-modelo" value="#{productoView.producto.modelo}"/>
+			
+			<p:outputLabel for="input-descripcion" value="Descripcion:  "/>
+			<p:inputText id="input-descripcion" value="#{productoView.producto.descripcion}"/>
+			
+			<p:outputLabel for="input-precio" value="Precio:  "/>
+			<p:inputText id="input-precio" value="#{productoView.producto.precio}"/>	
+			
+			<p:outputLabel for="input-stock" value="Stock:  "/>
+			<p:inputText id="input-stock" value="#{productoView.producto.stock}"/>
+							
+					
+		</p:panelGrid>	
+		
+		<p:panelGrid id="panel-buscar" columns="4" style="display:#{productoView.styleDataTable}">
+			<p:outputLabel for="input-modelo-search" value="Modelo: "/>
+			<p:inputText id="input-modelo-search" value="#{productoView.productoSearch.modelo}"/>	
+			<p:commandButton value="Buscar" actionListener="#{productoView.searchModeloProducto()}" 
+					update=":form-producto:dt-producto :form-producto:toolbar-producto" 
+					icon="pi pi-search" />
+		</p:panelGrid>	
+		
+	    <p:dataTable id="dt-producto" value="#{productoView.productos}" var="producto" 
+	    		paginator="true" rows="5" paginatorPosition="bottom" 
+	    		selectionMode="single" rowKey="#{producto.id}" emptyMessage="No se encontraron registros"
+	    		style="display:#{productoView.styleDataTable}">
+	    		
+	    	<p:ajax event="rowSelect" listener="#{productoView.selectProducto}" 
+	    		update=":form-producto:toolbar-producto :form-producto:panel-producto" />
+	    	<p:ajax event="rowUnselect" listener="#{productoView.unselectProducto}" 
+	    		update=":form-producto:toolbar-producto :form-producto:panel-producto" />
+	    		
+		    <p:column headerText="Id">
+		        <h:outputText value="#{producto.id}" />
+		    </p:column>	 
+		    <p:column headerText="Modelo">
+		        <h:outputText value="#{producto.modelo}" />
+		    </p:column>
+		    <p:column headerText="Descripcion">
+		        <h:outputText value="#{producto.descripcion}" />
+		    </p:column>
+		    <p:column headerText="Precio">
+		        <h:outputText value="#{producto.precio}" />
+		    </p:column>
+		    <p:column headerText="Stock">
+		        <h:outputText value="#{producto.stock}" />
+		    </p:column>
+		    
+		</p:dataTable>
+		
+		<p:toolbar id="toolbar-producto">
+			<f:facet name="left">
+				<p:commandButton value="Nuevo" actionListener="#{productoView.newproducto()}" 
+					update=":form-producto :form-producto:dt-producto :form-producto:toolbar-producto" 
+					icon="pi pi-file" disabled="#{productoView.disabledNuevo}" />
+					
+				<p:commandButton id="button-grabar" value="Grabar" actionListener="#{productoView.saveProducto()}" 
+					update=":form-producto :form-producto:dt-producto :form-producto:toolbar-producto" 
+					icon="pi pi-save"
+					disabled="#{productoView.disabledGrabar}" />	
+					
+				<p:commandButton id="button-cancelar" value="Cancelar" actionListener="#{productoView.cancelSaveProducto()}" 
+					update=":form-producto :form-producto:dt-producto :form-producto:toolbar-producto" 
+					icon="pi pi-times"
+					disabled="#{productoView.disabledCancelar}" />	
+					
+				<p:commandButton value="Editar" actionListener="#{productoView.editProducto()}" 
+					update=":form-producto :form-producto:dt-producto :form-producto:toolbar-producto" 
+					disabled="#{productoView.disabledEditar}" />
+					
+				<p:commandButton id="button-eliminar" value="Eliminar" 
+					actionListener="#{productoView.deleteProductoo()}" 
+					update=":form-producto :form-producto:dt-producto :form-producto:toolbar-producto" 
+					disabled="#{productoView.disabledEliminar}" >
+					<p:confirm header="Confirmacion" 
+						message="Estas seguro que deseas eliminar: #{productoView.productoSelected.modelo}" 
+						icon="pi pi-exclamation-triangle" />
+			    </p:commandButton>
+			     
+			    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			    </p:confirmDialog>
+				
+	
+			</f:facet>
+		</p:toolbar>
+	
+	</h:form>
+
+</h:body>
+</html>

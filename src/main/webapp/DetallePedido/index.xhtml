@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TechLive - DetallePedido</title>
+</h:head>
+<h:body>
+    <h2>Lista DetallePedido</h2>
+    
+    <h:form id="form-detallepedido">
+    	<p:growl id="growl" life="2000" />
+    
+		<p:panelGrid id="panel-detallepedido" columns="4" style="display:#{detallepedidoView.stylePanelGrid}">
+			<p:outputLabel for="input-preciototal" value="PrecioTotal: "/>
+			<p:inputText id="input-preciototal" value="#{detallepedidoView.detallepedido.preciototal}"/>
+			
+			<p:outputLabel for="input-confirmacionpedido" value="ConfirmacionPedido: "/>
+			<p:inputText id="input-confirmacionpedido" value="#{detallepedidoView.detallepedido.confirmacionpedido}"/>
+				
+		</p:panelGrid>	
+		
+	    <p:dataTable id="dt-detallepedido" value="#{detallepedidoView.detallepedido}" var="detallepedido" 
+	    		paginator="true" rows="5" paginatorPosition="bottom" 
+	    		selectionMode="single" rowKey="#{detallepedido.id}"
+	    		style="display:#{detallepedidoView.styleDataTable}">
+	    		
+	    	<p:ajax event="rowSelect" listener="#{detallepedidoView.selectCategoria}" 
+	    		update=":form-detallepedido:toolbar-detallepedido :form-detallepedido:panel-detallepedido" />
+	    	<p:ajax event="rowUnselect" listener="#{categoriaView.unselectCategoria}" 
+	    		update=":form-detallepedido:toolbar-detallepedido :form-detallepedido:panel-detallepedido" />
+	    		
+		    <p:column headerText="Id">
+		        <h:outputText value="#{detallepedido.id}" />
+		    </p:column>
+		 
+		    <p:column headerText="Precio Total">
+		        <h:outputText value="#{detallepedido.preciototal}" />
+		    </p:column>
+		    
+		    <p:column headerText="Confirmacion pedido">
+		        <h:outputText value="#{detallepedido.confirmacionpedido}" />
+		    </p:column>
+		    
+		</p:dataTable>
+		
+		<p:toolbar id="toolbar-detallepedido">
+			<f:facet name="left">
+				<p:commandButton value="Nuevo" actionListener="#{detallepedidoView.newDetallePedido()}" 
+					update=":form-detallepedido :form-detallepedido:dt-detallepedido :form-detallepedido:toolbar-detallepedido" 
+					icon="pi pi-file" disabled="#{detallepedidoView.disabledNuevo}" />
+					
+				<p:commandButton id="button-grabar" value="Grabar" actionListener="#{detallepedidoView.saveDetallePedido()}" 
+					update=":form-detallepedido :form-detallepedido:dt-detallepedido :form-detallepedido:toolbar-detallepedido" 
+					icon="pi pi-save"
+					disabled="#{detallepedidoView.disabledGrabar}" />	
+					
+				<p:commandButton id="button-cancelar" value="Cancelar" actionListener="#{detallepedidoView.cancelSaveDetallePedido()}" 
+					update=":form-detallepedido :form-detallepedido:dt-detallepedido :form-detallepedido:toolbar-detallepedido" 
+					icon="pi pi-times"
+					disabled="#{detallepedidoView.disabledCancelar}" />	
+					
+				<p:commandButton value="Editar" actionListener="#{detallepedidoView.editDetallePedido()}" 
+					update=":form-detallepedido :form-detallepedido:dt-detallepedido :form-detallepedido:toolbar-detallepedido" 
+					disabled="#{detallepedidoView.disabledEditar}" />
+					
+				<p:commandButton id="button-eliminar" value="Eliminar" 
+					actionListener="#{detallepedidoView.deleteDetallePedido()}" 
+					update=":form-detallepedido :form-detallepedido:dt-detallepedido :form-detallepedido:toolbar-detallepedido" 
+					disabled="#{detallepedidoView.disabledEliminar}" >
+					<p:confirm header="Confirmacion" 
+						message="Estas seguro que deseas eliminar: #{detallepedidoView.detallepedidoSelected.detallepedido.id}" 
+						icon="pi pi-exclamation-triangle" />
+			    </p:commandButton>
+			     
+			    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			    </p:confirmDialog>
+				
+	
+			</f:facet>
+		</p:toolbar>
+	
+	</h:form>
+
+</h:body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Delivery - Categorias</title>
+</h:head>
+<h:body>
+    <h2>Lista Categorias</h2>
+    
+    <h:form id="form-categoria">
+    	<p:growl id="growl" life="2000" />
+    
+		<p:panelGrid id="panel-categoria" columns="4" style="display:#{categoriaView.stylePanelGrid}">
+			<p:outputLabel for="input-denominacion" value="Denominación: "/>
+			<p:inputText id="input-denominacion" value="#{categoriaView.categoria.denominacion}"/>		
+		</p:panelGrid>	
+		
+		<p:panelGrid id="panel-buscar" columns="4" style="display:#{categoriaView.styleDataTable}">
+			<p:outputLabel for="input-denominacion-search" value="Denominación: "/>
+			<p:inputText id="input-denominacion-search" value="#{categoriaView.categoriaSearch.denominacion}"/>	
+			<p:commandButton value="Buscar" actionListener="#{categoriaView.searchDenominacionCategoria()}" 
+					update=":form-categoria :form-categoria:dt-categoria :form-categoria:toolbar-categoria" 
+					icon="pi pi-search" />
+		</p:panelGrid>	
+		
+	    <p:dataTable id="dt-categoria" value="#{categoriaView.categorias}" var="categoria" 
+	    		paginator="true" rows="5" paginatorPosition="bottom" 
+	    		selectionMode="single" rowKey="#{categoria.id}"
+	    		style="display:#{categoriaView.styleDataTable}">
+	    		
+	    	<p:ajax event="rowSelect" listener="#{categoriaView.selectCategoria}" 
+	    		update=":form-categoria:toolbar-categoria :form-categoria:panel-categoria" />
+	    	<p:ajax event="rowUnselect" listener="#{categoriaView.unselectCategoria}" 
+	    		update=":form-categoria:toolbar-categoria :form-categoria:panel-categoria" />
+	    		
+		    <p:column headerText="Id">
+		        <h:outputText value="#{categoria.id}" />
+		    </p:column>
+		 
+		    <p:column headerText="Denominación">
+		        <h:outputText value="#{categoria.denominacion}" />
+		    </p:column>
+		</p:dataTable>
+		
+		<p:toolbar id="toolbar-categoria">
+			<f:facet name="left">
+				<p:commandButton value="Nuevo" actionListener="#{categoriaView.newCategoria()}" 
+					update=":form-categoria :form-categoria:dt-categoria :form-categoria:toolbar-categoria" 
+					icon="pi pi-file" disabled="#{categoriaView.disabledNuevo}" />
+					
+				<p:commandButton id="button-grabar" value="Grabar" actionListener="#{categoriaView.saveCategoria()}" 
+					update=":form-categoria :form-categoria:dt-categoria :form-categoria:toolbar-categoria" 
+					icon="pi pi-save"
+					disabled="#{categoriaView.disabledGrabar}" />	
+					
+				<p:commandButton id="button-cancelar" value="Cancelar" actionListener="#{categoriaView.cancelSaveCategoria()}" 
+					update=":form-categoria :form-categoria:dt-categoria :form-categoria:toolbar-categoria" 
+					icon="pi pi-times"
+					disabled="#{categoriaView.disabledCancelar}" />	
+					
+				<p:commandButton value="Editar" actionListener="#{categoriaView.editCategoria()}" 
+					update=":form-categoria :form-categoria:dt-categoria :form-categoria:toolbar-categoria" 
+					disabled="#{categoriaView.disabledEditar}" />
+					
+				<p:commandButton id="button-eliminar" value="Eliminar" 
+					actionListener="#{categoriaView.deleteCategoria()}" 
+					update=":form-categoria :form-categoria:dt-categoria :form-categoria:toolbar-categoria" 
+					disabled="#{categoriaView.disabledEliminar}" >
+					<p:confirm header="Confirmacion" 
+						message="Estas seguro que deseas eliminar: #{categoriaView.categoriaSelected.denominacion}" 
+						icon="pi pi-exclamation-triangle" />
+			    </p:commandButton>
+			     
+			    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			    </p:confirmDialog>
+				
+	
+			</f:facet>
+		</p:toolbar>
+	
+	</h:form>
+
+</h:body>
+</html>

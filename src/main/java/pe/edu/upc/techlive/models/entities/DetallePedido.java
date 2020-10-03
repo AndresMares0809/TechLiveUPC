@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="detalle_pedidos")
@@ -25,9 +26,23 @@ public class DetallePedido {
 	@Column(name = "precio_total", nullable = false)
 	private float precioTotal;
 	
+	@Column(name = "confirmacion_pedido", nullable = false)
+	private boolean confirmacionPedido;
+	
+	public boolean isConfirmacionPedido() {
+		return confirmacionPedido;
+	}
+
+	public void setConfirmacionPedido(boolean confirmacionPedido) {
+		this.confirmacionPedido = confirmacionPedido;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="historial_id")
 	private Historial historial;
+	
+	@Transient
+	private Integer historialId;
 	
 	@OneToMany(mappedBy = "detallePedido")
 	private List<Producto> productos;
@@ -74,5 +89,14 @@ public class DetallePedido {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+
+	public Integer getHistorialId() {
+		return historialId;
+	}
+
+	public void setHistorialId(Integer historialId) {
+		this.historialId = historialId;
+	}
+	
 	
 }

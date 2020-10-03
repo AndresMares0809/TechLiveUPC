@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Delivery - Marca</title>
+</h:head>
+<h:body>
+    <h2>Lista Marca</h2>
+    
+    <h:form id="form-marca">
+    	<p:growl id="growl" life="2000" />
+    
+		<p:panelGrid id="panel-marca" columns="4" style="display:#{marcaView.stylePanelGrid}">
+		
+			<p:outputLabel for="input-nombre" value="Nombres: "/>
+			<p:inputText id="input-nombre" value="#{nombreView.nombre.nombre}"/>			
+					
+		</p:panelGrid>	
+		
+		<p:panelGrid id="panel-buscar" columns="4" style="display:#{marcaView.styleDataTable}">
+			<p:outputLabel for="input-nombre-search" value="Nombre: "/>
+			<p:inputText id="input-nombre-search" value="#{marcaView.marcaSearch.nombre}"/>	
+			<p:commandButton value="Buscar" actionListener="#{marcaView.searchNombreMarca()}" 
+					update=":form-marca:dt-marca :form-marca:toolbar-marca" 
+					icon="pi pi-search" />
+		</p:panelGrid>	
+		
+	    <p:dataTable id="dt-marca" value="#{marcaView.marcas}" var="marca" 
+	    		paginator="true" rows="5" paginatorPosition="bottom" 
+	    		selectionMode="single" rowKey="#{marca.id}" emptyMessage="No se encontraron registros"
+	    		style="display:#{marcaView.styleDataTable}">
+	    		
+	    	<p:ajax event="rowSelect" listener="#{marcaView.selectMarca}" 
+	    		update=":form-marca:toolbar-marca :form-marca:panel-marca" />
+	    	<p:ajax event="rowUnselect" listener="#{marcaView.unselectMarca}" 
+	    		update=":form-marca:toolbar-marca :form-marca:panel-marca" />
+	    		
+		    <p:column headerText="Id">
+		        <h:outputText value="#{marca.id}" />
+		    </p:column>	 
+		    <p:column headerText="Nombre">
+		        <h:outputText value="#{marca.nombre}" />
+		    </p:column>
+		  
+		</p:dataTable>
+		
+		<p:toolbar id="toolbar-marca">
+			<f:facet name="left">
+				<p:commandButton value="Nuevo" actionListener="#{marcaView.newMarca()}" 
+					update=":form-marca :form-marca:dt-marca :form-marca:toolbar-marca" 
+					icon="pi pi-file" disabled="#{marcaView.disabledNuevo}" />
+					
+				<p:commandButton id="button-grabar" value="Grabar" actionListener="#{marcaView.saveMarca()}" 
+					update=":form-marca :form-marca:dt-marca :form-marca:toolbar-marca" 
+					icon="pi pi-save"
+					disabled="#{marcaView.disabledGrabar}" />	
+					
+				<p:commandButton id="button-cancelar" value="Cancelar" actionListener="#{marcaView.cancelSaveMarca()}" 
+					update=":form-marca :form-marca:dt-marca :form-marca:toolbar-marca" 
+					icon="pi pi-times"
+					disabled="#{marcaView.disabledCancelar}" />	
+					
+				<p:commandButton value="Editar" actionListener="#{marcaView.editMarca()}" 
+					update=":form-marca :form-marca:dt-marca :form-marca:toolbar-marca" 
+					disabled="#{marcaView.disabledEditar}" />
+					
+				<p:commandButton id="button-eliminar" value="Eliminar" 
+					actionListener="#{marcaView.deleteMarca()}" 
+					update=":form-marca :form-marca:dt-marca :form-marca:toolbar-marca" 
+					disabled="#{marcaView.disabledEliminar}" >
+					<p:confirm header="Confirmacion" 
+						message="Estas seguro que deseas eliminar: #{marcaView.marcaSelected.nombre}" 
+						icon="pi pi-exclamation-triangle" />
+			    </p:commandButton>
+			     
+			    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			    </p:confirmDialog>
+				
+	
+			</f:facet>
+		</p:toolbar>
+	
+	</h:form>
+
+</h:body>
+</html>

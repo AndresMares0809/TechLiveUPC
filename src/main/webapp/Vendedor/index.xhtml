@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TECHLIVE - Vendedor</title>
+</h:head>
+<h:body>
+    <h2>Lista Vendedores</h2>
+    
+    <h:form id="form-vendedor">
+    	<p:growl id="growl" life="2000" />
+    
+		<p:panelGrid id="panel-vendedor" columns="4" style="display:#{vendedorView.stylePanelGrid}">
+			<p:outputLabel for="input-nombre" value="Nombre: "/>
+			<p:inputText id="input-nombre" value="#{vendedorView.vendedor.nombre}"/>
+			
+			<p:outputLabel for="input-ruc" value="RUC:  "/>
+			<p:inputText id="input-ruc" value="#{vendedorView.vendedor.ruc}"/>
+			
+			
+			<p:outputLabel for="input-direccion" value="Dirección:  "/>
+			<p:inputText id="input-direccion" value="#(vendedorView.vendedor.direccion)"/>
+					
+		</p:panelGrid>	
+		
+		<p:panelGrid id="panel-buscar" columns="4" style="display:#{vendedorView.styleDataTable}">
+			<p:outputLabel for="input-nombre-search" value="Nombre: "/>
+			<p:inputText id="input-nombre-search" value="#{vendedorView.vendedorSearch.nombre}"/>	
+			<p:commandButton value="Buscar" actionListener="#{vendedorView.searchNombreVendedor()}" 
+					update=":form-vendedor:dt-vendedor :form-vendedor:toolbar-vendedor" 
+					icon="pi pi-search" />
+		</p:panelGrid>	
+		
+	    <p:dataTable id="dt-vendedor" value="#{vendedorView.vendedores}" var="vendedor" 
+	    		paginator="true" rows="5" paginatorPosition="bottom" 
+	    		selectionMode="single" rowKey="#{vendedor.id}" emptyMessage="No se encontraron registros"
+	    		style="display:#{vendedorView.styleDataTable}">
+	    		
+	    	<p:ajax event="rowSelect" listener="#{vendedorView.selectVendedor}" 
+	    		update=":form-vendedor:toolbar-vendedor :form-vendedor:panel-vendedor" />
+	    	<p:ajax event="rowUnselect" listener="#{vendedorView.unselectVendedor}" 
+	    		update=":form-vendedor:toolbar-vendedor :form-vendedor:panel-vendedor" />
+	    		
+		    <p:column headerText="Id">
+		        <h:outputText value="#{vendedor.id}" />
+		    </p:column>	 
+		    <p:column headerText="Nombre">
+		        <h:outputText value="#{vendedor.nombre}" />
+		    </p:column>
+		    <p:column headerText="RUC">
+		        <h:outputText value="#{vendedor.ruc}" />
+		    </p:column>
+		    <p:column headerText="Dirección">
+		        <h:outputText value="#{vendedor.direccion}"/>
+		   </p:column>
+		   
+		</p:dataTable>
+		
+		<p:toolbar id="toolbar-vendedor">
+			<f:facet name="left">
+				<p:commandButton value="Nuevo" actionListener="#{vendedorView.newVendedor()}" 
+					update=":form-vendedor :form-vendedor:dt-vendedor :form-vendedor:toolbar-vendedor" 
+					icon="pi pi-file" disabled="#{vendedorView.disabledNuevo}" />
+					
+				<p:commandButton id="button-grabar" value="Grabar" actionListener="#{vendedorView.saveVendedor()}" 
+					update=":form-vendedor :form-vendedor:dt-vendedor :form-vendedor:toolbar-vendedor" 
+					icon="pi pi-save"
+					disabled="#{vendedorView.disabledGrabar}" />	
+					
+				<p:commandButton id="button-cancelar" value="Cancelar" actionListener="#{vendedorView.cancelSaveVendedor()}" 
+					update=":form-vendedor :form-vendedor:dt-vendedor :form-vendedor:toolbar-vendedor" 
+					icon="pi pi-times"
+					disabled="#{vendedorView.disabledCancelar}" />	
+					
+				<p:commandButton value="Editar" actionListener="#{vendedorView.editVendedor()}" 
+					update=":form-vendedor :form-vendedor:dt-vendedor :form-vendedor:toolbar-vendedor" 
+					disabled="#{vendedorView.disabledEditar}" />
+					
+				<p:commandButton id="button-eliminar" value="Eliminar" 
+					actionListener="#{vendedorView.deleteVendedor()}" 
+					update=":form-vendedor :form-vendedor:dt-vendedor :form-vendedor:toolbar-vendedor" 
+					disabled="#{vendedorView.disabledEliminar}" >
+					<p:confirm header="Confirmacion" 
+						message="Estas seguro que deseas eliminar: #{vendedorView.vendedorSelected.nombre}" 
+						icon="pi pi-exclamation-triangle" />
+			    </p:commandButton>
+			     
+			    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			    </p:confirmDialog>
+				
+	
+			</f:facet>
+		</p:toolbar>
+	
+	</h:form>
+
+</h:body>
+</html>

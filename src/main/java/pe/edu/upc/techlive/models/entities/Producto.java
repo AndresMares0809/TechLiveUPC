@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="productos")
@@ -34,17 +35,29 @@ public class Producto {
 	@JoinColumn(name = "vendedor_id")
 	private Vendedor vendedor;
 	
+	@Transient
+	private Integer vendedorlId;
+	
 	@ManyToOne
 	@JoinColumn(name="categoria_id")
 	private Categoria categoria;
+	
+	@Transient
+	private Integer categorialId;
 	
 	@ManyToOne
 	@JoinColumn(name = "marca_id")
 	private Marca marca;
 	
+	@Transient
+	private Integer marcaId;
+	
 	@ManyToOne
 	@JoinColumn(name = "detalle_pedido_id")
 	private DetallePedido detallePedido;
+	
+	@Transient
+	private Integer detallePedidoId;
 	
 	public Integer getId() {
 		return id;
@@ -116,6 +129,38 @@ public class Producto {
 
 	public void setDetallePedido(DetallePedido detallePedido) {
 		this.detallePedido = detallePedido;
+	}
+
+	public Integer getVendedorlId() {
+		return vendedorlId;
+	}
+
+	public void setVendedorlId(Integer vendedorlId) {
+		this.vendedorlId = vendedorlId;
+	}
+
+	public Integer getCategorialId() {
+		return categorialId;
+	}
+
+	public void setCategorialId(Integer categorialId) {
+		this.categorialId = categorialId;
+	}
+
+	public Integer getMarcaId() {
+		return marcaId;
+	}
+
+	public void setMarcaId(Integer marcaId) {
+		this.marcaId = marcaId;
+	}
+
+	public Integer getDetallePedidoId() {
+		return detallePedidoId;
+	}
+
+	public void setDetallePedidoId(Integer detallePedidoId) {
+		this.detallePedidoId = detallePedidoId;
 	}
 
 

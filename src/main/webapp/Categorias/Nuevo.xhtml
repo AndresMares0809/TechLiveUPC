@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TECHLIVE - Categorias</title>
+</h:head>
+<h:body>
+    <h2>Nueva Categoria</h2>
+    
+	<h:form id="form-categoria">
+		<p:panelGrid id="panel-categoria" columns="4">
+			<p:outputLabel for="input-denominacion" value="Denominación: "/>
+			<p:inputText id="input-denominacion" value="#{categoriaView.categoria.denominacion}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{categoriaView.cleanForm()}" 
+			update=":form-categoria:input-denominacion" />
+		<p:commandButton value="Grabar" actionListener="#{categoriaView.saveCategoria()}" 
+			update=":form-categoria:input-denominacion" />	
+	</h:form>
+
+</h:body>
+</html>

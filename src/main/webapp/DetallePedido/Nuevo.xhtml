@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Delivery - DetallePedido</title>
+</h:head>
+<h:body>
+    <h2>Nuevo Detalle Pedido</h2>
+    
+	<h:form id="form-detallePedidos">
+		<p:panelGrid id="panel-detallePedido" columns="4">
+		
+			<p:outputLabel for="input-precioTotal" value="Precio Total: "/>
+			<p:inputText id="input-precioTotal" value="#{detallePedidoView.detallePedido.precioTotal}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{detallePedidoView.cleanForm()}" 
+			update=":form-detallePedido:input-precioTotal" />
+		<p:commandButton value="Grabar" actionListener="#{detallePedidoView.saveDetallePedido()}" 
+			update=":form-detallePedido:input-precioTotal" />	
+			
+		<p:panelGrid id="panel-detallePedido" columns="4">	
+			<p:outputLabel for="input-confirmacionPedido" value="Confirmacion Pedido: "/>
+			<p:inputText id="input-confirmacionPedido" value="#{detallePedidoView.detallePedido.confirmacionPedido}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{clienteView.cleanForm()}" 
+			update=":form-detallePedido:input-confirmacionPedido" />
+		<p:commandButton value="Grabar" actionListener="#{detallePedidoView.saveDetallePedido()}" 
+			update=":form-detallePedido:input-confirmacionPedido" />	
+			
+	</h:form>
+
+</h:body>
+</html>

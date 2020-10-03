@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TechLive - Historial</title>
+</h:head>
+<h:body>
+    <h2>Nuevo Historial</h2>
+    
+	<h:form id="form-historial">
+		<p:panelGrid id="panel-historial" columns="4">
+			<p:outputLabel for="input-estado" value="Estado: "/>
+			<p:inputText id="input-estado" value="#{historialView.historial.estado}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{historialView.cleanForm()}" 
+			update=":form-historial:input-estado" />
+		<p:commandButton value="Grabar" actionListener="#{categoriaView.saveCategoria()}" 
+			update=":form-historial:input-estado" />
+				
+		<p:panelGrid id="panel-historial" columns="4">	
+			<p:outputLabel for="input-ultimaActualizacion" value="Ultima Actualizacion: "/>
+			<p:inputText id="input-ultimaActualizacion" value="#{historialView.historial.ultimaActualizacion}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{historialView.cleanForm()}" 
+			update=":form-historial:input-ultimaActualizacion" />
+		<p:commandButton value="Grabar" actionListener="#{categoriaView.saveCategoria()}" 
+			update=":form-historial:input-ultimaActualizacion" />
+			
+			
+	</h:form>
+
+</h:body>
+</html>

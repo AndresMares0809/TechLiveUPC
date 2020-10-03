@@ -26,12 +26,17 @@ public class Vendedor {
 	@Column(name = "ruc", length = 30, nullable = false)
 	private String ruc;
 	
+	@Column(name = "direccion", length = 30, nullable = false)
+	private String direccion;
+	
 	@OneToMany(mappedBy = "vendedor")
 	private List<Producto> productos;
 	
 	@OneToOne
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -72,6 +77,8 @@ public class Vendedor {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+
 	
 	
 }

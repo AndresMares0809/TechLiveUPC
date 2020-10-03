@@ -1,5 +1,6 @@
 package pe.edu.upc.techlive.models.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,6 +24,10 @@ public class Categoria {
 
 	@OneToMany(mappedBy = "categoria")
 	private List<Producto> productos;
+	
+	public Categoria() {
+		productos = new ArrayList<>();
+	}
 	
 	public Integer getId() {
 		return id;

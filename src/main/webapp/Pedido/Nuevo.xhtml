@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TechLive - Pedido</title>
+</h:head>
+<h:body>
+    <h2>Nuevo Pedido</h2>
+    
+	<h:form id="form-pedido">
+		<p:panelGrid id="panel-pedido" columns="4">
+			<p:outputLabel for="input-cantidad" value="Cantidad: "/>
+			<p:inputText id="input-cantidad" value="#{pedidoView.pedido.cantidad}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{pedidoView.cleanForm()}" 
+			update=":form-pedido:input-cantidad" />
+		<p:commandButton value="Grabar" actionListener="#{pedidoView.savePedido()}" 
+			update=":form-pedido:input-cantidad" />	
+			
+			<p:panelGrid id="panel-pedido" columns="4">
+			<p:outputLabel for="input-fechaPedido" value="Fecha Pedido: "/>
+			<p:inputText id="input-fechaPedido" value="#{pedidoView.pedido.cantidad}"/>		
+		</p:panelGrid>	
+		<p:commandButton value="Nuevo" actionListener="#{pedidoView.cleanForm()}" 
+			update=":form-pedido:input-fechaPedido" />
+		<p:commandButton value="Grabar" actionListener="#{pedidoView.savePedido()}" 
+			update=":form-pedido:input-fechaPedido" />	
+			
+	</h:form>
+
+</h:body>
+</html>

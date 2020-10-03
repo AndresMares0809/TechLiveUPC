@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      	xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+    	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TECHLIVE - Pedido</title>
+</h:head>
+<h:body>
+    <h2>Lista Pedido</h2>
+    
+    <h:form id="form-pedido">
+    	<p:growl id="growl" life="2000" />
+    
+		<p:panelGrid id="panel-pedido" columns="4" style="display:#{pedidoView.stylePanelGrid}">
+		
+			<p:outputLabel for="input-cantidad" value="Cantidad: "/>
+			<p:inputText id="input-cantidad" value="#{pedidoView.pedido.cantidad}"/>
+			
+			<p:outputLabel for="date-fechaPedido" value="Fecha de pedido:  "/>
+			<p:datePicker id="date-fechaPedido" value="#{pedidoView.pedido.fechaPedido}" />			
+					
+		</p:panelGrid>	
+		
+	    <p:dataTable id="dt-pedido" value="#{pedidoView.pedidos}" var="pedido" 
+	    		paginator="true" rows="5" paginatorPosition="bottom" 
+	    		selectionMode="single" rowKey="#{pedido.id}" emptyMessage="No se encontraron registros"
+	    		style="display:#{pedidoView.styleDataTable}">
+	    		
+	    	<p:ajax event="rowSelect" listener="#{pedidoView.selectPedido}" 
+	    		update=":form-pedido:toolbar-pedido :form-pedido:panel-pedido" />
+	    	<p:ajax event="rowUnselect" listener="#{pedidoView.unselectPedido}" 
+	    		update=":form-pedido:toolbar-pedido :form-pedido:panel-pedido" />
+	    		
+		    <p:column headerText="Id">
+		        <h:outputText value="#{pedido.id}" />
+		    </p:column>	 
+		    <p:column headerText="Cantidad">
+		        <h:outputText value="#{pedido.cantidad}" />
+		    </p:column>
+		    <p:column headerText="Fecha Pedido">
+		        <h:outputText value="#{pedido.fechaPedido}" />
+		    </p:column>
+		    
+		</p:dataTable>
+		
+		<p:toolbar id="toolbar-pedido">
+			<f:facet name="left">
+				<p:commandButton value="Nuevo" actionListener="#{pedidoView.newPedido()}" 
+					update=":form-pedido :form-pedido:dt-pedido :form-pedido:toolbar-pedido" 
+					icon="pi pi-file" disabled="#{pedidoView.disabledNuevo}" />
+					
+				<p:commandButton id="button-grabar" value="Grabar" actionListener="#{pedidoView.savePedido()}" 
+					update=":form-pedido :form-pedido:dt-pedido :form-pedido:toolbar-pedido" 
+					icon="pi pi-save"
+					disabled="#{pedidoView.disabledGrabar}" />	
+					
+				<p:commandButton id="button-cancelar" value="Cancelar" actionListener="#{pedidoView.cancelSavePedido()}" 
+					update=":form-pedido :form-pedido:dt-pedido :form-pedido:toolbar-pedido" 
+					icon="pi pi-times"
+					disabled="#{pedidoView.disabledCancelar}" />	
+					
+				<p:commandButton value="Editar" actionListener="#{pedidoView.editPedido()}" 
+					update=":form-pedido :form-pedido:dt-pedido :form-pedido:toolbar-pedido" 
+					disabled="#{pedidoView.disabledEditar}" />
+					
+				<p:commandButton id="button-eliminar" value="Eliminar" 
+					actionListener="#{pedidoView.deletePedido()}" 
+					update=":form-pedido :form-pedido:dt-pedido :form-pedido:toolbar-pedido"
+					disabled="#{pedidoView.disabledEliminar}" >
+					<p:confirm header="Confirmacion" 
+						message="Estas seguro que deseas eliminar: #{pedidoView.pedidoSelected.cantidad}" 
+						icon="pi pi-exclamation-triangle" />
+			    </p:commandButton>
+			     
+			    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			    </p:confirmDialog>
+				
+	
+			</f:facet>
+		</p:toolbar>
+	
+	</h:form>
+
+</h:body>
+</html>
