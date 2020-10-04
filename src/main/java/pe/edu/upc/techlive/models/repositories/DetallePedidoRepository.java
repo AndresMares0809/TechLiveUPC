@@ -6,6 +6,6 @@ import pe.edu.upc.techlive.models.entities.DetallePedido;
 
 public interface DetallePedidoRepository extends JpaRepository<DetallePedido, Integer>{
 
-	List<DetallePedido> findByid(int id);
+	List<DetallePedido> findByid(int id) throws Exception;
 
 }

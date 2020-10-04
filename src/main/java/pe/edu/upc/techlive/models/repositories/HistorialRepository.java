@@ -6,5 +6,5 @@ import pe.edu.upc.techlive.models.entities.Historial;
 
 public interface HistorialRepository extends JpaRepository<Historial, Integer>{
 
-	List<Historial> findByid(int id);
+	List<Historial> findByid(int id) throws Exception;
 }

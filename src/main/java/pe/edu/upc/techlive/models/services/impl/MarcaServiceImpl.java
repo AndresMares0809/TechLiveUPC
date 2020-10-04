@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
-
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
